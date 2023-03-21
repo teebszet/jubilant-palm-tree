@@ -48,7 +48,11 @@
   }
 
   & .results {
-    li {
+    li a {
+      margin: 0;
+      text-decoration: unset;
+    }
+    .result-item {
       margin-top: 1rem;
       gap: 1rem;
       display: flex;

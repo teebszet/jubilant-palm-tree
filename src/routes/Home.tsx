@@ -5,6 +5,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { NFTEvent } from "../data/stacksNodeApi";
 import useStacksAddressNFTEvents from "../hooks/useStacksAddressNFTEvents";
 import "./Home.scss";
+// import { cvToValue } from "@stacks/transactions";
 
 export function Home() {
   const [walletAddress, setWalletAddress] = useState(
@@ -41,8 +42,8 @@ const parseCollectionName = (nftEvent: NFTEvent): string =>
   nftEvent?.asset_identifier?.split("::")?.shift() ?? "";
 
 const parseTokenId = (nftEvent: NFTEvent): string => {
-  console.log(nftEvent?.value);
-  return "87"; // TODO
+  // return cvToValue(nftEvent?.value?.hex);
+  return nftEvent?.value?.repr?.replace(/^u/, "");
 };
 
 const Results = ({ results }: { results?: NFTEvent[] }) => {
@@ -63,9 +64,11 @@ const Results = ({ results }: { results?: NFTEvent[] }) => {
             const toUrl = `details?${searchParams.toString()}`;
             return (
               <li key={i}>
-                <span>{nftEvent?.asset_identifier}</span>
                 <Link to={toUrl}>
-                  <FontAwesomeIcon icon={faChevronRight} size="lg" />
+                  <div className="result-item">
+                    <span>{nftEvent?.asset_identifier}</span>
+                    <FontAwesomeIcon icon={faChevronRight} size="lg" />
+                  </div>
                 </Link>
               </li>
             );
