@@ -15,7 +15,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
-      <Route path="detail/:id" element={<Detail />} />
+      <Route path="details/:id" element={<Detail />} />
       <Route path="*" element={<NoMatch />} />
     </Route>
   )
@@ -23,16 +23,12 @@ const router = createBrowserRouter(
 
 // TODO move to routes
 function Layout() {
-  return (
-    <div>
-      <nav></nav>
-      <Outlet />
-    </div>
-  );
+  return <Outlet />;
 }
 
 function Detail() {
   const { id } = useParams();
+  console.log(id);
   return (
     <div>
       <h2>details here: {id}</h2>

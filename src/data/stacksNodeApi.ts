@@ -25,6 +25,7 @@ type AddressNFTEventsResponse = {
   offset: number;
 };
 
+// TODO support limit, offset pagination
 export async function fetchAddressNFTEvents(
   walletAddress: string
 ): Promise<AddressNFTEventsResponse> {
