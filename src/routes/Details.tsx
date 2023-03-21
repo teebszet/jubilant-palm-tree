@@ -65,7 +65,7 @@ const parseImageUrl = (tokenData: TokenData): string => {
 };
 
 const Attribute = ({ label, value }: { label: string; value: string }) => (
-  <div>
+  <div className="attribute">
     <h3>{label}</h3>
     <span>{value}</span>
   </div>
