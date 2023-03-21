@@ -7,7 +7,9 @@ import {
   RouterProvider,
   useParams,
 } from "react-router-dom";
+import Home from "./routes/Home";
 import "./App.css";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,19 +21,12 @@ const router = createBrowserRouter(
   )
 );
 
+// TODO move to routes
 function Layout() {
   return (
     <div>
       <nav></nav>
       <Outlet />
-    </div>
-  );
-}
-
-function Home() {
-  return (
-    <div>
-      <h2>lookup here</h2>
     </div>
   );
 }
@@ -56,8 +51,20 @@ function NoMatch() {
   );
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
