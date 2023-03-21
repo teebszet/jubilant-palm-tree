@@ -35,8 +35,9 @@ function Details() {
               <span>{data?.data?.fully_qualified_token_id}</span>
             </div>
             <h2>Attributes</h2>
-            {data?.data?.nft_token_attributes?.map((attribute) => (
+            {data?.data?.nft_token_attributes?.map((attribute, i) => (
               <Attribute
+                key={i}
                 label={attribute?.trait_type}
                 value={attribute?.value}
               />
