@@ -32,6 +32,15 @@ export function Home() {
   );
 }
 
+// TODO put these in a class somewhere
+const parseCollectionName = (nftEvent: NFTEvent): string =>
+  nftEvent?.asset_identifier?.split("::")?.shift() ?? "";
+
+const parseTokenId = (nftEvent: NFTEvent): string => {
+  console.log(nftEvent?.value);
+  return "87"; // TODO
+};
+
 const Results = ({ results }: { results?: NFTEvent[] }) => {
   if (!results) {
     return null;
@@ -41,16 +50,21 @@ const Results = ({ results }: { results?: NFTEvent[] }) => {
       Results:
       {results
         ?.filter((nftEvent: NFTEvent) => Boolean(nftEvent.asset_identifier))
-        .map((nftEvent: NFTEvent) => (
-          <ul>
-            <li>
-              <span>{nftEvent?.asset_identifier}</span>
-              <Link
-                to={`details/${encodeURIComponent(nftEvent?.asset_identifier)}`}
-              />
-            </li>
-          </ul>
-        ))}
+        .map((nftEvent: NFTEvent) => {
+          const searchParams = new URLSearchParams({
+            collectionName: parseCollectionName(nftEvent),
+            tokenId: parseTokenId(nftEvent),
+          });
+          const toUrl = `details?${searchParams.toString()}`;
+          return (
+            <ul>
+              <li>
+                <span>{nftEvent?.asset_identifier}</span>
+                <Link to={toUrl}>{">"}</Link>
+              </li>
+            </ul>
+          );
+        })}
     </div>
   );
 };
