@@ -1,25 +1,63 @@
-import logo from "./logo.svg";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Link,
+  Outlet,
+  Route,
+  RouterProvider,
+  useParams,
+} from "react-router-dom";
 import "./App.css";
 
-function App() {
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      <Route index element={<Home />} />
+      <Route path="detail/:id" element={<Detail />} />
+      <Route path="*" element={<NoMatch />} />
+    </Route>
+  )
+);
+
+function Layout() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <nav></nav>
+      <Outlet />
     </div>
   );
+}
+
+function Home() {
+  return (
+    <div>
+      <h2>lookup here</h2>
+    </div>
+  );
+}
+
+function Detail() {
+  const { id } = useParams();
+  return (
+    <div>
+      <h2>details here: {id}</h2>
+    </div>
+  );
+}
+
+function NoMatch() {
+  return (
+    <div>
+      <h2>Nothing to see here!</h2>
+      <p>
+        <Link to="/">Go to the home page</Link>
+      </p>
+    </div>
+  );
+}
+
+function App() {
+  return <RouterProvider router={router} />;
 }
 
 export default App;
